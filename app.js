@@ -4,9 +4,19 @@ const port = 4000;
 
 app.use(express.json());
 
+app.get('/', (req, res)=>{
+    res.send("<h2>Ecommerce app</h2>");
+})
+
+//logging middleware
+app.use((req, res, next)=>{
+    console.log(`${req.method} request made to ${req.url}`);
+    next();
+})
+
 app.get("/welcome", (req, res)=>{
-    const username = req.query.username; 
-    const role = req.query.role;
+    const username = req.query.username || 'rajat'; 
+    const role = req.query.role || 'author';
     res.json(`Welcome - ${username} your role is ${role}`);
 })
 
