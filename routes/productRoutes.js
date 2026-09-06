@@ -1,37 +1,16 @@
 const express = require('express');
 const router = express.Router();
 
-// Mock database array
-let products = [
-    { id: "101", name: "Laptop", price: 999 },
-    { id: "102", name: "Phone", price: 499 }
-];
+// Import the product controller
+const productController = require('../controllers/productController');
 
-// GET /products - Fetch all products dynamically
-router.get('/', (req, res) => {
-    res.json(products);
-});
+// GET /products
+router.get('/', productController.getAllProducts);
 
-// POST /products - Add a new product dynamically
-router.post('/', (req, res) => {
-    const newProduct = {
-        id: (products.length + 101).toString(),
-        name: req.body.name || "Generic Product",
-        price: req.body.price || 0
-    };
-    products.push(newProduct);
-    res.status(201).json({ message: "Product added successfully", product: newProduct });
-});
+// POST /products
+router.post('/', productController.createProduct);
 
-// GET /products/:id - Fetch a single product dynamically
-router.get('/:id', (req, res) => {
-    const id = req.params.id;
-    const product = products.find(p => p.id === id);
-    
-    if (!product) {
-        return res.status(404).json({ error: `Product with ID ${id} not found` });
-    }
-    res.json(product);
-});
+// GET /products/:id
+router.get('/:id', productController.getProductById);
 
 module.exports = router;
