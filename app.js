@@ -14,17 +14,26 @@ let products = [
 ]
 
 app.get('/products', (req, res)=>{
-    res.json({
-        message: "Here is the list of all products",
-        data: products
-    });
+    res.json({products});
+})
+
+app.get('/products/:id', (req, res)=>{
+    const proId = parseInt(req.params.id);
+    const prod = products.find((p=>p.id===proId)) 
+
+    if(!prod){
+        return res.status(404).json({message: "Product not found"});
+    }
+
+    res.json(prod);
+
 })
 
 app.post('/products', (req, res)=>{
     const {name} = req.body;
     const newProduct = {id:products.length+1, name};
     products.push(newProduct);
-    res.status(201).json(`A new product has been added ${newProduct}`);
+    res.status(201).json(newProduct);
 })
 
 
@@ -36,10 +45,9 @@ app.post('/categories', (req, res)=>{
     res.json("A new category has been created.");
 })
 
-/* app.all('*', (req, res) => {
-    res.json("Route does not exist");
+app.all('*any', (req, res) => {
+    res.status(404).send('<h1>404 - Page Not Found</h1>');
 });
- */
 
 app.listen(port, ()=>{
     console.log(`Server is running @ ${port}`);
