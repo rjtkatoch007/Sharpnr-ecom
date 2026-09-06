@@ -4,8 +4,10 @@ const port = 4000;
 
 app.use(express.json());
 
-app.get('/', (req, res)=>{
-    res.send("Ecom APP");
+app.get("/welcome", (req, res)=>{
+    const username = req.query.username; 
+    const role = req.query.role;
+    res.json(`Welcome - ${username} your role is ${role}`);
 })
 
 let products = [
@@ -20,6 +22,7 @@ app.get('/products', (req, res)=>{
 app.get('/products/:id', (req, res)=>{
     const proId = parseInt(req.params.id);
     const prod = products.find((p=>p.id===proId)) 
+       
 
     if(!prod){
         return res.status(404).json({message: "Product not found"});
