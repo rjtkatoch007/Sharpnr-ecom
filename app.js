@@ -1,7 +1,11 @@
 const express = require("express");
 const app = express();
 const port = 4000;
-const routes = require("./route.js");
+//const routes = require("./route.js");
+// Import Route Files
+const userRoutes = require('./routes/userRoutes');
+const productRoutes = require('./routes/productRoutes');
+const cartRoutes = require('./routes/cartRoutes');
 
 // Middleware for parsing JSON data (useful for POST requests)
 app.use(express.json());
@@ -16,7 +20,11 @@ app.use((req, res, next)=>{
     next();
 })
 // Connect the router to the main server
-app.use('/', routes);
+//app.use('/', routes);
+// Integrate Routes with Base Paths
+app.use('/users', userRoutes);
+app.use('/products', productRoutes);
+app.use('/cart', cartRoutes);
 
 
 
