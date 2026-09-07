@@ -1,5 +1,6 @@
 const path = require('path');
 const productService = require('../services/productService');
+const { sendErrorResponse, sendResponse } = require('../utils/response');
 
 // Hand over to service and return all products
 const getAllProducts = (req, res) => {
@@ -15,9 +16,10 @@ const getProductById = (req, res) => {
     const product = productService.fetchProductById(id);
     
     if (!product) {
-        return res.status(404).json({ error: `Product with ID ${id} not found` });
+        return sendErrorResponse(res, {message:'Product not found!', statusCode:404})
     }
-    res.json(product);
+    //res.json(product);
+    return sendResponse(res, product, 200);
 };
 
 // Send request body data to service to create a new product
