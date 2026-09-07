@@ -22,8 +22,11 @@ const getProductById = (req, res) => {
 
 // Send request body data to service to create a new product
 const createProduct = (req, res) => {
-    const newProduct = productService.addProduct(req.body);
-    res.status(201).json({ message: "Product added successfully", product: newProduct });
+    /* const newProduct = productService.addProduct(req.body);
+    res.status(201).json({ message: "Product added successfully", product: newProduct }); */
+    const data = req.body;
+
+    res.json({value:data.productName});
 };
 
 module.exports = {
