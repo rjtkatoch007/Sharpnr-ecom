@@ -1,9 +1,12 @@
+const path = require('path');
 const productService = require('../services/productService');
 
 // Hand over to service and return all products
 const getAllProducts = (req, res) => {
-    const products = productService.fetchAllProducts();
-    res.json(products);
+    // __dirname is the current directory (controllers/), so we step up '..' and into 'views'
+    const filePath = path.join(__dirname, '..', 'views', 'products.html');
+    
+    res.sendFile(filePath);
 };
 
 // Hand over parameters to service and handle the result/errors

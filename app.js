@@ -22,9 +22,9 @@ app.use((req, res, next)=>{
 // Connect the router to the main server
 //app.use('/', routes);
 // Integrate Routes with Base Paths
-app.use('/users', userRoutes);
-app.use('/products', productRoutes);
-app.use('/cart', cartRoutes);
+app.use('/api/users', userRoutes);
+app.use('/api/products', productRoutes);
+app.use('/api/cart', cartRoutes);
 
 
 
