@@ -1,29 +1,15 @@
-// Mock database array
-let products = [
-    { id: "101", name: "Laptop", price: 999 },
-    { id: "102", name: "Phone", price: 499 }
-];
+const productService = require('../services/productService');
 
-// Fetch all products
+// Hand over to service and return all products
 const getAllProducts = (req, res) => {
+    const products = productService.fetchAllProducts();
     res.json(products);
 };
 
-// Add a new product
-const createProduct = (req, res) => {
-    const newProduct = {
-        id: (products.length + 101).toString(),
-        name: req.body.name || "Generic Product",
-        price: req.body.price || 0
-    };
-    products.push(newProduct);
-    res.status(201).json({ message: "Product added successfully", product: newProduct });
-};
-
-// Fetch a single product by ID
+// Hand over parameters to service and handle the result/errors
 const getProductById = (req, res) => {
     const id = req.params.id;
-    const product = products.find(p => p.id === id);
+    const product = productService.fetchProductById(id);
     
     if (!product) {
         return res.status(404).json({ error: `Product with ID ${id} not found` });
@@ -31,7 +17,12 @@ const getProductById = (req, res) => {
     res.json(product);
 };
 
-// Export the controller functions
+// Send request body data to service to create a new product
+const createProduct = (req, res) => {
+    const newProduct = productService.addProduct(req.body);
+    res.status(201).json({ message: "Product added successfully", product: newProduct });
+};
+
 module.exports = {
     getAllProducts,
     createProduct,
